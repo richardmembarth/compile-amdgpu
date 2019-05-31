@@ -1,0 +1,128 @@
+; ModuleID = '/space/anydsl/stincilla/build/sorting_networks/./median'
+source_filename = "/space/anydsl/stincilla/build/sorting_networks/./median"
+target datalayout = "e-p:64:64-p1:64:64-p2:32:32-p3:32:32-p4:64:64-p5:32:32-p6:32:32-i64:64-v16:16-v24:32-v32:32-v48:64-v96:128-v192:256-v256:256-v512:512-v1024:1024-v2048:2048-n32:64-S32-A5"
+target triple = "amdgcn-amd-amdhsa"
+
+; Function Attrs: nounwind
+define amdgpu_kernel void @lambda_79897([0 x float] addrspace(1)* nocapture %_79900_85286, [0 x float] addrspace(1)* nocapture readonly %_79901_85287) local_unnamed_addr #0 !reqd_work_group_size !0 {
+lambda_79897_start:
+  %0 = tail call i32 @llvm.amdgcn.workitem.id.x()
+  %1 = tail call i8 addrspace(4)* @llvm.amdgcn.dispatch.ptr()
+  %2 = getelementptr inbounds i8, i8 addrspace(4)* %1, i64 4
+  %3 = bitcast i8 addrspace(4)* %2 to i16 addrspace(4)*
+  %4 = load i16, i16 addrspace(4)* %3, align 2
+  %5 = tail call i32 @llvm.amdgcn.workgroup.id.x()
+  %6 = tail call i32 @llvm.amdgcn.workitem.id.y()
+  %7 = getelementptr inbounds i8, i8 addrspace(4)* %1, i64 6
+  %8 = bitcast i8 addrspace(4)* %7 to i16 addrspace(4)*
+  %9 = load i16, i16 addrspace(4)* %8, align 2
+  %10 = tail call i32 @llvm.amdgcn.workgroup.id.y()
+  %11 = zext i16 %4 to i32
+  %12 = mul nsw i32 %5, %11
+  %13 = add nsw i32 %12, %0
+  %14 = icmp sgt i32 %13, 2
+  %15 = select i1 %14, i32 %13, i32 2
+  %16 = icmp slt i32 %15, 4097
+  %17 = select i1 %16, i32 %15, i32 4097
+  %.if_join3 = add nsw i32 %17, -2
+  %18 = icmp slt i32 %13, 1
+  %19 = zext i16 %9 to i32
+  %20 = mul nsw i32 %10, %19
+  %21 = add nsw i32 %20, %6
+  %22 = shl nsw i32 %21, 12
+  %23 = or i32 %.if_join3, %22
+  %24 = sext i32 %23 to i64
+  %25 = getelementptr inbounds [0 x float], [0 x float] addrspace(1)* %_79901_85287, i64 0, i64 %24
+  %26 = bitcast float addrspace(1)* %25 to i32 addrspace(1)*
+  %27 = load i32, i32 addrspace(1)* %26, align 4
+  %28 = add nsw i32 %13, -1
+  %if_join11 = select i1 %18, i32 0, i32 %28
+  %29 = icmp slt i32 %if_join11, 4095
+  %.if_join11 = select i1 %29, i32 %if_join11, i32 4095
+  %30 = add nsw i32 %.if_join11, %22
+  %31 = sext i32 %30 to i64
+  %32 = getelementptr inbounds [0 x float], [0 x float] addrspace(1)* %_79901_85287, i64 0, i64 %31
+  %33 = bitcast float addrspace(1)* %32 to i32 addrspace(1)*
+  %34 = load i32, i32 addrspace(1)* %33, align 4
+  %35 = icmp sgt i32 %13, 0
+  %if_join19 = select i1 %35, i32 %13, i32 0
+  %36 = icmp slt i32 %if_join19, 4095
+  %.if_join19 = select i1 %36, i32 %if_join19, i32 4095
+  %37 = or i32 %.if_join19, %22
+  %38 = sext i32 %37 to i64
+  %39 = getelementptr inbounds [0 x float], [0 x float] addrspace(1)* %_79901_85287, i64 0, i64 %38
+  %40 = bitcast float addrspace(1)* %39 to i32 addrspace(1)*
+  %41 = load i32, i32 addrspace(1)* %40, align 4
+  %42 = icmp sgt i32 %13, -1
+  %43 = select i1 %42, i32 %13, i32 -1
+  %44 = icmp slt i32 %43, 4094
+  %45 = select i1 %44, i32 %43, i32 4094
+  %.if_join27 = add nsw i32 %45, 1
+  %46 = or i32 %.if_join27, %22
+  %47 = sext i32 %46 to i64
+  %48 = getelementptr inbounds [0 x float], [0 x float] addrspace(1)* %_79901_85287, i64 0, i64 %47
+  %49 = bitcast float addrspace(1)* %48 to i32 addrspace(1)*
+  %50 = load i32, i32 addrspace(1)* %49, align 4
+  %51 = bitcast i32 %27 to float
+  %52 = bitcast i32 %34 to float
+  %53 = fcmp olt float %52, %51
+  %54 = bitcast i32 %41 to float
+  %55 = bitcast i32 %50 to float
+  br i1 %53, label %expr_true33, label %oddeven_merge_sort_range_cont
+
+expr_true33:                                      ; preds = %lambda_79897_start
+  br label %oddeven_merge_sort_range_cont
+
+oddeven_merge_sort_range_cont:                    ; preds = %lambda_79897_start, %expr_true33
+  %56 = phi float [ %52, %lambda_79897_start ], [ %51, %expr_true33 ]
+  %57 = phi i32 [ %34, %lambda_79897_start ], [ %27, %expr_true33 ]
+  %58 = phi i32 [ %27, %lambda_79897_start ], [ %34, %expr_true33 ]
+  %59 = phi float [ %51, %lambda_79897_start ], [ %52, %expr_true33 ]
+  %60 = fcmp olt float %55, %54
+  br i1 %60, label %expr_true35, label %oddeven_merge_sort_range_cont36
+
+expr_true35:                                      ; preds = %oddeven_merge_sort_range_cont
+  br label %oddeven_merge_sort_range_cont36
+
+oddeven_merge_sort_range_cont36:                  ; preds = %oddeven_merge_sort_range_cont, %expr_true35
+  %61 = phi float [ %54, %oddeven_merge_sort_range_cont ], [ %55, %expr_true35 ]
+  %62 = phi i32 [ %50, %oddeven_merge_sort_range_cont ], [ %41, %expr_true35 ]
+  %63 = phi float [ %55, %oddeven_merge_sort_range_cont ], [ %54, %expr_true35 ]
+  %64 = phi i32 [ %41, %oddeven_merge_sort_range_cont ], [ %50, %expr_true35 ]
+  %65 = fcmp olt float %61, %59
+  %66 = bitcast i32 %58 to float
+  %67 = select i1 %65, i32 %58, i32 %64
+  %68 = select i1 %65, float %66, float %61
+  %69 = fcmp olt float %63, %56
+  %70 = bitcast i32 %62 to float
+  %71 = select i1 %69, i32 %62, i32 %57
+  %72 = select i1 %69, float %70, float %56
+  %73 = fcmp olt float %68, %72
+  %74 = select i1 %73, i32 %67, i32 %71
+  %75 = add nsw i32 %22, %13
+  %76 = sext i32 %75 to i64
+  %77 = getelementptr inbounds [0 x float], [0 x float] addrspace(1)* %_79900_85286, i64 0, i64 %76
+  %78 = bitcast float addrspace(1)* %77 to i32 addrspace(1)*
+  store i32 %74, i32 addrspace(1)* %78, align 4
+  ret void
+}
+
+; Function Attrs: nounwind readnone speculatable
+declare i32 @llvm.amdgcn.workitem.id.x() #1
+
+; Function Attrs: nounwind readnone speculatable
+declare i8 addrspace(4)* @llvm.amdgcn.dispatch.ptr() #1
+
+; Function Attrs: nounwind readnone speculatable
+declare i32 @llvm.amdgcn.workgroup.id.x() #1
+
+; Function Attrs: nounwind readnone speculatable
+declare i32 @llvm.amdgcn.workitem.id.y() #1
+
+; Function Attrs: nounwind readnone speculatable
+declare i32 @llvm.amdgcn.workgroup.id.y() #1
+
+attributes #0 = { nounwind }
+attributes #1 = { nounwind readnone speculatable }
+
+!0 = !{i32 128, i32 1, i32 1}
