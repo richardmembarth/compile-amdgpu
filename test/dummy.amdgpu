@@ -1,0 +1,11 @@
+; ModuleID = 'AMDGPU_HSA'
+source_filename = "AMDGPU_HSA"
+target datalayout = "e-p:64:64-p1:64:64-p2:32:32-p3:32:32-p4:64:64-p5:32:32-p6:32:32-i64:64-v16:16-v24:32-v32:32-v48:64-v96:128-v192:256-v256:256-v512:512-v1024:1024-v2048:2048-n32:64-S32-A5-G1-ni:7"
+target triple = "amdgcn-amd-amdhsa"
+
+define amdgpu_kernel void @dummy_kernel() local_unnamed_addr !reqd_work_group_size !0 {
+_16147:
+  ret void
+}
+
+!0 = !{i32 1, i32 1, i32 1}
