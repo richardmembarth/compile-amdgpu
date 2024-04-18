@@ -32,13 +32,15 @@ std::string emit_gcn(const std::string& program, const std::string& cpu, const s
 
 int main(int argc, char** argv) {
     std::string filename;
-    if (argc == 2)
+    std::string arch;
+    if (argc == 3) {
         filename = argv[1];
-    else
-        error("usage: % 'llvmir.amdgpu'", argv[0]);
+        arch = argv[2];
+    } else
+        error("usage: % llvmir.amdgpu gfx1030", argv[0]);
 
     const std::string& program = load_file(filename);
-    emit_gcn(program, "gfx906", filename, llvm::OptimizationLevel::O3);
+    emit_gcn(program, arch, filename, llvm::OptimizationLevel::O3);
 
     return EXIT_SUCCESS;
 }
