@@ -62,9 +62,9 @@ std::string load_file(const std::string& filename) {
     return read_stream(src_file);
 }
 
-bool llvm_initialized = false;
+bool llvm_amdgpu_initialized = false;
 std::string emit_gcn(const std::string& program, const std::string& cpu, const std::string& filename, llvm::OptimizationLevel opt_level) {
-    if (!llvm_initialized) {
+    if (!llvm_amdgpu_initialized) {
         std::vector<const char*> c_llvm_args;
         std::vector<std::string> llvm_args = { "gcn", "-opt-bisect-limit=-1" };
         for (auto &str : llvm_args)
@@ -76,7 +76,7 @@ std::string emit_gcn(const std::string& program, const std::string& cpu, const s
         LLVMInitializeAMDGPUTargetMC();
         LLVMInitializeAMDGPUAsmParser();
         LLVMInitializeAMDGPUAsmPrinter();
-        llvm_initialized = true;
+        llvm_amdgpu_initialized = true;
     }
 
     llvm::LLVMContext llvm_context;
